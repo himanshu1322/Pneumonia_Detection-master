@@ -1,5 +1,5 @@
 # Flask Web-App Pneumonia Detection from Chest X-Ray Images CNN 
-A Flask **pneumonia detection** web application 
+A Flask *pneumonia detection* web application 
 
 [![](https://img.shields.io/badge/python-3.7%2C%203.5%2B-blue.svg)]()
 [![](https://img.shields.io/badge/Flask-1.1.0-brightgreen.svg)]()
@@ -11,11 +11,11 @@ A Flask **pneumonia detection** web application
 
 1. Clone The Repository or Download Zip from  [< My profile >](https://github.com/himanshu1322/Pneumonia_Detection-master.git) & Extract it.
 
-2. Install Requirements  `pip install -r requirements.txt`
+2. Install Requirements  pip install -r requirements.txt
 
-3. To run the app on localhost run `python app.py`
+3. To run the app on localhost run python app.py
 
-4. app is running at `http://127.0.0.1:5002`
+4. app is running at http://127.0.0.1:5002
 
 #### Dataset
 <pre>
@@ -30,7 +30,10 @@ Dataset Link : https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia
 
 ## WebApp 
 #### Home Page 
-![Home Page ](static/pic1.jpg)
+![Login Page ](static/login.png)
 
 #### Prediction
-![Home Page ](static/pic4.jpg)
+![Predictor ](static/predictor.jpg)
+
+#### Results
+![Result ](static/results.jpg)
