@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PneumoAI Login</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+
+<body class="bg-white">
+    {% block content %}{% endblock %}
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    montserrat: ['Montserrat', 'sans-serif'],
+                }
+            }
+        }
+    }
+</script>
+
+</body>
+
+</html>

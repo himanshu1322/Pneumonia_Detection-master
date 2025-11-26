@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="max-w-6xl mx-auto">
+
+    <!-- Title -->
+    <h2 class="text-4xl font-bold mb-8 
+               bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">
+        Admin Panel
+    </h2>
+
+    <!-- Add Doctor Button -->
+    <div class="text-right mb-6">
+        <a href="/register"
+           class="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 
+                  text-white rounded-xl shadow hover:shadow-lg transition">
+            ➕ Add Doctor
+        </a>
+    </div>
+
+    <!-- Doctors Table -->
+    <div class="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
+
+        <h3 class="text-2xl font-bold text-gray-800 mb-6">Registered Doctors</h3>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-center border-collapse">
+
+                <thead class="bg-gray-100 text-gray-700">
+                    <tr>
+                        <th class="p-3 font-semibold">Username</th>
+                        <th class="p-3 font-semibold">Name</th>
+                        <th class="p-3 font-semibold">Specialization</th>
+                        <th class="p-3 font-semibold">Role</th>
+                        <th class="p-3 font-semibold">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for d in doctors %}
+                    <tr class="border-b hover:bg-gray-50 transition">
+
+                        <td class="p-3 text-gray-700">{{ d[1] }}</td>
+                        <td class="p-3 text-gray-700">{{ d[2] }}</td>
+                        <td class="p-3 text-gray-700">{{ d[3] }}</td>
+                        <td class="p-3 text-gray-700 capitalize">{{ d[4] }}</td>
+
+                        <!-- DELETE BUTTON -->
+                        <td class="p-3">
+                            <a href="/delete-doctor/{{ d[0] }}"
+                               onclick="return confirm('Are you sure you want to delete this doctor?');"
+                               class="px-4 py-2 bg-red-500 text-white rounded-lg 
+                                      hover:bg-red-600 shadow transition flex items-center gap-2 justify-center">
+                                🗑 Delete
+                            </a>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

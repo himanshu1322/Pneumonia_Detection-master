@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="max-w-7xl mx-auto space-y-10">
+
+    <!-- Title -->
+    <h2 class="text-4xl font-bold mb-6 
+               bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">
+        Dashboard
+    </h2>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+    <!-- Total Predictions -->
+    <div class="p-6 rounded-2xl bg-white shadow-lg border border-gray-100 flex items-center justify-between">
+        <div>
+            <p class="text-gray-600">Total Predictions</p>
+            <p class="text-3xl font-bold text-gray-900">{{ history|length }}</p>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 7h18M3 12h18M3 17h18" />
+        </svg>
+    </div>
+
+    <!-- Normal Cases -->
+    <div class="p-6 rounded-2xl bg-white shadow-lg border border-gray-100 flex items-center justify-between">
+        <div>
+            <p class="text-gray-600">Normal Cases</p>
+            <p class="text-3xl font-bold text-black-600">{{ normals }}</p>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5 13l4 4L19 7" />
+        </svg>
+    </div>
+
+    <!-- Pneumonia Cases -->
+    <div class="p-6 rounded-2xl bg-white shadow-lg border border-gray-100 flex items-center justify-between">
+        <div>
+            <p class="text-gray-600">Pneumonia Cases</p>
+            <p class="text-3xl font-bold text-black-600">{{ pneu }}</p>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+    </div>
+
+    <!-- Normal Percentage -->
+    <div class="p-6 rounded-2xl bg-white shadow-lg border border-gray-100 flex items-center justify-between">
+        <div>
+            <p class="text-gray-600">Normal % (approx)</p>
+            <p class="text-3xl font-bold text-black-600">{{ healthy_percent }}%</p>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 3v18m8-9H3" />
+        </svg>
+    </div>
+
+</div>
+
+
+    <!-- Charts -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+        <div class="bg-white p-6 shadow-lg rounded-3xl border border-gray-100 
+            h-[420px] flex flex-col items-center justify-center">
+            <h3 class="text-center text-xl font-semibold mb-2 text-gray-800">
+                Normal vs Pneumonia
+            </h3>
+            <div class="w-[260px] h-[260px] flex items-center justify-center">
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+
+
+        <div class="bg-white p-6 shadow-lg rounded-3xl border border-gray-100 
+            h-[420px] flex flex-col justify-between">            <h3 class="text-center text-xl font-semibold mb-4 text-gray-800">
+                Daily Predictions
+            </h3>
+            <canvas id="lineChart"></canvas>
+        </div>
+
+    </div>
+
+    <!-- Prediction History -->
+    <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100">
+        <h3 class="text-2xl font-bold mb-6 text-gray-800">Prediction History</h3>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-center border-collapse">
+                <tr class="bg-gray-100 text-gray-700">
+                    <th class="p-3 font-semibold">Result</th>
+                    <th class="p-3 font-semibold">Confidence</th>
+                    <th class="p-3 font-semibold">X-Ray</th>
+                    <th class="p-3 font-semibold">Heatmap</th>
+                    <th class="p-3 font-semibold">Time</th>
+                </tr>
+
+                {% for r in history %}
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="p-3 font-bold 
+                        {% if r[0] == 'PNEUMONIA' %} text-red-600 {% else %} text-green-600 {% endif %}">
+                        {{ r[0] }}
+                    </td>
+                    <td class="p-3 text-gray-700">{{ r[1] }}</td>
+                    <td class="p-3"><img class="h-16 rounded-xl" src="/{{ r[2] }}"></td>
+                    <td class="p-3"><img class="h-16 rounded-xl" src="/{{ r[3] }}"></td>
+                    <td class="p-3 text-gray-700">{{ r[4] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+</div>
+<script>
+// ---------------------------------------------
+// GLOBAL
+// ---------------------------------------------
+Chart.defaults.color = "#1e293b";
+Chart.defaults.borderColor = "#d1d5db";
+
+// ---------------------------------------------
+// PIE CHART — blue/purple theme
+// ---------------------------------------------
+new Chart(document.getElementById("pieChart"), {
+    type: "pie",
+    data: {
+        labels: ["Normal", "Pneumonia"],
+        datasets: [{
+            data: [{{ normals }}, {{ pneu }}],
+            backgroundColor: [
+                "#6366f1", // purple
+                "#3b82f6"  // blue
+            ],
+            hoverOffset: 12,
+        }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                position: "bottom",
+                labels: { padding: 20 }
+            }
+        }
+    }
+});
+
+// ---------------------------------------------
+// LINE CHART — smooth purple line
+// ---------------------------------------------
+new Chart(document.getElementById("lineChart"), {
+    type: "line",
+    data: {
+        labels: {{ daily_counts.keys()|list|tojson }},
+        datasets: [{
+            label: "Predictions per day",
+            data: {{ daily_counts.values()|list|tojson }},
+            borderColor: "#6366f1",
+            backgroundColor: "rgba(99,102,241,0.15)",
+            pointBackgroundColor: "#4f46e5",
+            borderWidth: 3,
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: {
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: { stepSize: 1 }
+            }
+        }
+    }
+});
+</script>
+
+
+
+{% endblock %}

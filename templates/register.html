@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="max-w-xl mx-auto">
+
+    <!-- Title -->
+    <h2 class="text-4xl font-bold mb-8 
+               bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">
+        Register New Doctor
+    </h2>
+
+    <!-- Form Card -->
+    <div class="bg-white rounded-3xl shadow-xl p-10 border border-gray-100">
+
+        <form method="POST" class="space-y-6">
+
+            <!-- Name -->
+            <div>
+                <label class="font-semibold text-gray-700">Doctor Name</label>
+                <input name="name"
+                       class="w-full p-3 mt-1 border border-gray-300 rounded-xl bg-gray-50 
+                              focus:ring-2 focus:ring-purple-400 focus:outline-none"
+                       placeholder="Enter doctor's full name"
+                       required>
+            </div>
+
+            <!-- Specialization -->
+            <div>
+                <label class="font-semibold text-gray-700">Specialization</label>
+                <input name="specialization"
+                       class="w-full p-3 mt-1 border border-gray-300 rounded-xl bg-gray-50
+                              focus:ring-2 focus:ring-purple-400 focus:outline-none"
+                       placeholder="e.g., Radiologist, General Physician"
+                       required>
+            </div>
+
+            <!-- Username -->
+            <div>
+                <label class="font-semibold text-gray-700">Username</label>
+                <input name="username"
+                       class="w-full p-3 mt-1 border border-gray-300 rounded-xl bg-gray-50
+                              focus:ring-2 focus:ring-purple-400 focus:outline-none"
+                       placeholder="Create a unique username"
+                       required>
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label class="font-semibold text-gray-700">Password</label>
+                <input type="password"
+                       name="password"
+                       class="w-full p-3 mt-1 border border-gray-300 rounded-xl bg-gray-50
+                              focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                       placeholder="Create a secure password"
+                       required>
+            </div>
+
+            <!-- Register Button -->
+            <button class="w-full py-3 mt-4 
+                           bg-gradient-to-r from-purple-600 to-blue-600 
+                           text-white font-semibold rounded-xl shadow-lg
+                           hover:shadow-xl hover:opacity-90 transition">
+                Register Doctor
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

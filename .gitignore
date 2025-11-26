@@ -1,0 +1,19 @@
+# Ignore virtual environment
+venv/
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore uploads & generated images
+uploads/
+
+# Ignore database
+*.db
+
+# Ignore model files
+*.h5
+
+# Mac/Windows junk
+.DS_Store
+Thumbs.db
